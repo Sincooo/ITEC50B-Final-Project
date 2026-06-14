@@ -508,7 +508,6 @@
     </div>
 
     <div class="login-alert" id="loginAlert">
-      <span>âš ï¸</span>
       <span id="loginAlertMsg">Invalid username or password. Please try again.</span>
     </div>
 
@@ -643,7 +642,7 @@
 
   function showAlert(msg) {
     const alert = document.getElementById('loginAlert');
-    document.getElementById('loginAlertMsg').textContent = msg;
+    document.getElementById('loginAlertMsg').textContent = ' ⚠️ ' + msg;
     alert.classList.add('visible');
   }
 
