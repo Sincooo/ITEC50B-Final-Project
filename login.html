@@ -1,0 +1,682 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login BayanLink Portal</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%231A4731'/><text y='22' x='6' font-size='18'>ðŸ˜ï¸</text></svg>" />
+  <style>
+    
+    body {
+      min-height: 100vh;
+      background: linear-gradient(rgba(247,250,248,0.74), rgba(247,250,248,0.74)), url('login-townhall.webp') center/cover no-repeat fixed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .login-shell {
+      display: flex;
+      width: 100%;
+      max-width: 920px;
+      min-height: 560px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+
+    
+    .login-brand-panel {
+      flex: 1;
+      background: linear-gradient(155deg, var(--green-900) 0%, var(--green-800) 55%, var(--green-600) 100%);
+      padding: 52px 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-brand-panel::before {
+      content: '';
+      position: absolute;
+      top: -80px;
+      right: -80px;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(46,204,113,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .login-brand-panel::after {
+      content: '';
+      position: absolute;
+      bottom: -60px;
+      left: -40px;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(46,204,113,0.08) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .login-logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .login-logo-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .login-logo-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--green-400);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .login-logo-text {
+      color: var(--white);
+    }
+
+    .login-logo-text strong {
+      display: block;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+
+    .login-logo-text span {
+      font-size: 10px;
+      color: rgba(255,255,255,0.45);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+    }
+
+    .login-brand-body {
+      position: relative;
+      z-index: 1;
+    }
+
+    .login-brand-body h1 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 34px;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+
+    .login-brand-body h1 em {
+      font-style: italic;
+      color: var(--green-400);
+    }
+
+    .login-brand-body p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.62);
+      line-height: 1.7;
+      max-width: 320px;
+    }
+
+    .login-feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .login-feature-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.75);
+    }
+
+    .login-feature-item .feat-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--green-400);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    
+    .login-form-panel {
+      width: 400px;
+      background: var(--white);
+      padding: 52px 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .login-form-header {
+      margin-bottom: 32px;
+    }
+
+    .login-form-header h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-bottom: 6px;
+    }
+
+    .login-form-header p {
+      font-size: 13px;
+      color: var(--slate-400);
+      line-height: 1.6;
+    }
+
+    .login-form .form-group {
+      margin-bottom: 18px;
+    }
+
+    .login-form .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--slate-600);
+      margin-bottom: 7px;
+      letter-spacing: 0.02em;
+    }
+
+    .login-form .form-group input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid var(--slate-200);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      color: var(--slate-900);
+      font-family: inherit;
+      background: var(--surface);
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .login-form .form-group input:focus {
+      border-color: var(--green-400);
+      box-shadow: 0 0 0 3px rgba(46,204,113,0.12);
+      background: var(--white);
+    }
+
+    .login-form .form-group input.input-error {
+      border-color: #EF4444 !important;
+      box-shadow: 0 0 0 3px rgba(239,68,68,0.10) !important;
+    }
+
+    .field-error {
+      font-size: 11px;
+      color: #EF4444;
+      margin-top: 5px;
+      display: block;
+      font-weight: 500;
+    }
+
+    .password-wrap {
+      position: relative;
+    }
+
+    .password-wrap input {
+      padding-right: 44px !important;
+    }
+
+    .toggle-pw {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 12px;
+      color: var(--slate-400);
+      padding: 2px 4px;
+      transition: color var(--transition);
+    }
+
+    .toggle-pw:hover { color: var(--slate-600); }
+
+    .login-options {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      margin-top: -4px;
+    }
+
+    .remember-wrap {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      cursor: pointer;
+    }
+
+    .remember-wrap input[type="checkbox"] {
+      accent-color: var(--green-600);
+      width: 14px;
+      height: 14px;
+      cursor: pointer;
+    }
+
+    .remember-wrap span {
+      font-size: 12px;
+      color: var(--slate-600);
+      font-weight: 500;
+    }
+
+    .forgot-link {
+      font-size: 12px;
+      color: var(--green-600);
+      font-weight: 600;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: inherit;
+      padding: 0;
+    }
+
+    .forgot-link:hover { text-decoration: underline; }
+
+    .login-btn {
+      width: 100%;
+      padding: 13px;
+      background: var(--green-900);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background var(--transition), transform var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .login-btn:hover:not(:disabled) {
+      background: var(--green-600);
+      transform: translateY(-1px);
+    }
+
+    .login-btn:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+    .login-divider {
+      text-align: center;
+      margin: 22px 0;
+      position: relative;
+      font-size: 11px;
+      color: var(--slate-400);
+      font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+
+    .login-divider::before,
+    .login-divider::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 38%;
+      height: 1px;
+      background: var(--slate-200);
+    }
+
+    .login-divider::before { left: 0; }
+    .login-divider::after { right: 0; }
+
+    .demo-accounts {
+      background: var(--green-50);
+      border: 1px solid var(--green-100);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+    }
+
+    .demo-accounts p {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--green-600);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .demo-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 4px;
+      cursor: pointer;
+      transition: background var(--transition);
+      border-radius: 4px;
+    }
+
+    .demo-row:hover { background: rgba(46,204,113,0.08); }
+
+    .demo-row-left {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .demo-role {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--slate-900);
+    }
+
+    .demo-creds {
+      font-size: 10px;
+      color: var(--slate-400);
+      font-family: 'Courier New', monospace;
+      margin-top: 1px;
+    }
+
+    .demo-use-btn {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--green-600);
+      background: none;
+      border: 1px solid var(--green-100);
+      border-radius: 4px;
+      padding: 3px 8px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all var(--transition);
+    }
+
+    .demo-use-btn:hover {
+      background: var(--green-600);
+      color: var(--white);
+      border-color: var(--green-600);
+    }
+
+    .login-alert {
+      background: #FEF2F2;
+      border: 1px solid #FECACA;
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #DC2626;
+      margin-bottom: 18px;
+      display: none;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .login-alert.visible {
+      display: flex;
+    }
+
+    
+    @media (max-width: 768px) {
+      body { padding: 0; align-items: stretch; }
+
+      .login-shell {
+        flex-direction: column;
+        border-radius: 0;
+        min-height: 100vh;
+        max-width: 100%;
+        box-shadow: none;
+      }
+
+      .login-brand-panel {
+        padding: 32px 28px 28px;
+        flex: 0 0 auto;
+      }
+
+      .login-brand-body h1 { font-size: 26px; }
+      .login-brand-body p { display: none; }
+      .login-feature-list { display: none; }
+
+      .login-form-panel {
+        width: 100%;
+        padding: 36px 28px 48px;
+        flex: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="login-shell">
+
+  
+  <div class="login-brand-panel">
+    <div class="login-logo-wrap">
+      <div class="login-logo-icon"><img src="logo.png" alt="BayanLink logo"></div>
+      <div class="login-logo-text">
+        <strong>BayanLink</strong>
+        <span>Official Community Portal</span>
+      </div>
+    </div>
+
+    <div class="login-brand-body">
+      <h1>
+        Public Service<br>
+        <em>at Your Fingertips</em>
+      </h1>
+      <p>
+        Sign in to request certificates, track your concerns, stay updated on announcements, and connect with your barangay officials â€” all without lining up.
+      </p>
+    </div>
+
+    <div class="login-feature-list">
+      <div class="login-feature-item">
+        <span class="feat-dot"></span>
+        Online Certificate Requests
+      </div>
+      <div class="login-feature-item">
+        <span class="feat-dot"></span>
+        Community Announcements & Advisories
+      </div>
+      <div class="login-feature-item">
+        <span class="feat-dot"></span>
+        File Complaints & Track Resolution
+      </div>
+      <div class="login-feature-item">
+        <span class="feat-dot"></span>
+        Directory of Barangay Officials
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="login-form-panel">
+    <div class="login-form-header">
+      <h2>Welcome back! </h2>
+      <p>Enter your credentials to access the BayanLink portal.</p>
+    </div>
+
+    <div class="login-alert" id="loginAlert">
+      <span>âš ï¸</span>
+      <span id="loginAlertMsg">Invalid username or password. Please try again.</span>
+    </div>
+
+    <form class="login-form" id="loginForm" novalidate>
+
+      <div class="form-group">
+        <label for="loginUser">Username / Resident ID</label>
+        <input type="text" id="loginUser" placeholder="e.g. juandelacruz or RES-0001" autocomplete="username" />
+      </div>
+
+      <div class="form-group">
+        <label for="loginPass">Password</label>
+        <div class="password-wrap">
+          <input type="password" id="loginPass" placeholder="Enter your password" autocomplete="current-password" />
+          <button type="button" class="toggle-pw" id="togglePw" title="Show / hide password">Show</button>
+        </div>
+      </div>
+
+      <div class="login-options">
+        <label class="remember-wrap">
+          <input type="checkbox" id="rememberMe" />
+          <span>Remember me</span>
+        </label>
+        <button type="button" class="forgot-link" id="forgotBtn">Forgot password?</button>
+      </div>
+
+      <button type="submit" class="login-btn" id="loginBtn">
+        Sign In to Portal
+      </button>
+    </form>
+    <div class="login-divider">DEMO ACCOUNT</div>
+
+    <div class="demo-accounts">
+      <p>Quick access - click Use to fill in credentials</p>
+
+      <div class="demo-row" onclick="fillDemo('resident','mabuhay')">
+        <div class="demo-row-left">
+          <span class="demo-role">Resident</span>
+          <span class="demo-creds">resident / mabuhay</span>
+        </div>
+        <button class="demo-use-btn" onclick="event.stopPropagation();fillDemo('resident','mabuhay')">Use</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<script>
+  
+  const ACCOUNTS = {
+    admin:    { password: 'admin123',   role: 'Resident',   name: 'Maria Santos' },
+    kapitan:  { password: 'kapitan2026', role: 'Barangay Captain', name: 'Hon. Roberto Reyes' },
+    resident: { password: 'mabuhay',    role: 'Resident',         name: 'Juan Dela Cruz' },
+  };
+
+  
+  function fillDemo(user, pass) {
+    document.getElementById('loginUser').value = user;
+    document.getElementById('loginPass').value = pass;
+    document.getElementById('loginUser').focus();
+  }
+  const togglePwBtn = document.getElementById('togglePw');
+  const passInput   = document.getElementById('loginPass');
+  let pwVisible = false;
+
+  togglePwBtn.addEventListener('click', () => {
+    pwVisible = !pwVisible;
+    passInput.type = pwVisible ? 'text' : 'password';
+    togglePwBtn.textContent = pwVisible ? 'Hide' : 'Show';
+  });
+
+  
+  document.getElementById('forgotBtn').addEventListener('click', () => {
+    showLoginToast('Please visit the Barangay Hall to reset your password.');
+  });
+
+  
+  document.getElementById('loginForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const userInput = document.getElementById('loginUser');
+    const passField = document.getElementById('loginPass');
+    const btn       = document.getElementById('loginBtn');
+    const alert     = document.getElementById('loginAlert');
+    userInput.classList.remove('input-error');
+    passField.classList.remove('input-error');
+    alert.classList.remove('visible');
+
+    const username = userInput.value.trim().toLowerCase();
+    const password = passField.value;
+    if (!username) {
+      userInput.classList.add('input-error');
+      showAlert('Please enter your username or Resident ID.');
+      return;
+    }
+    if (!password) {
+      passField.classList.add('input-error');
+      showAlert('Please enter your password.');
+      return;
+    }
+    btn.disabled = true;
+    btn.innerHTML = '<span style="display:inline-block;animation:spin 0.8s linear infinite"></span> Signing in';
+
+    setTimeout(() => {
+      const account = ACCOUNTS[username];
+
+      if (account && account.password === password) {
+        sessionStorage.setItem('brgy_user', JSON.stringify({
+          username,
+          name: account.name,
+          role: account.role,
+        }));
+
+        btn.innerHTML = 'Redirecting';
+
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 600);
+
+      } else {
+        btn.disabled = false;
+        btn.innerHTML = 'Sign In to Portal';
+        userInput.classList.add('input-error');
+        passField.classList.add('input-error');
+        showAlert('Incorrect username or password. Please try again.');
+        passField.value = '';
+        passField.focus();
+      }
+    }, 900);
+  });
+
+  function showAlert(msg) {
+    const alert = document.getElementById('loginAlert');
+    document.getElementById('loginAlertMsg').textContent = msg;
+    alert.classList.add('visible');
+  }
+
+  
+  function showLoginToast(msg, icon = 'â„¹') {
+    let t = document.getElementById('loginToast');
+    if (!t) {
+      t = document.createElement('div');
+      t.id = 'loginToast';
+      t.style.cssText = `
+        position:fixed;bottom:24px;right:24px;background:var(--green-900);color:#fff;
+        padding:12px 18px;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.2);
+        font-size:13px;font-weight:500;display:flex;align-items:center;gap:8px;
+        transform:translateY(60px);opacity:0;transition:all 0.35s cubic-bezier(0.34,1.56,0.64,1);
+        font-family:Inter,sans-serif;z-index:999;
+      `;
+      document.body.appendChild(t);
+    }
+    t.innerHTML = `<span>${icon}</span><span>${msg}</span>`;
+    requestAnimationFrame(() => {
+      t.style.transform = 'translateY(0)';
+      t.style.opacity = '1';
+    });
+    setTimeout(() => {
+      t.style.transform = 'translateY(60px)';
+      t.style.opacity = '0';
+    }, 4000);
+  }
+</script>
+
+<style>
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+
+</body>
+</html>
