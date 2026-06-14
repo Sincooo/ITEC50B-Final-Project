@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BayanLink — Online Community Portal</title>
+  <meta name="description" content="Official online portal of BayanLink. Request certificates, read announcements, file complaints, and meet your barangay officials — all online." />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%231A4731'/><text y='22' x='6' font-size='18'>🏘️</text></svg>" />
+  <style>
+    .topbar-user {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--green-50);
+      border: 2px solid var(--green-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .user-info {
+      display: flex;
+      flex-direction: column;
+    }
+    .user-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--slate-900);
+      line-height: 1.2;
+    }
+    .user-role {
+      font-size: 10px;
+      color: var(--slate-400);
+      font-weight: 500;
+    }
+    .logout-btn {
+      background: none;
+      border: 1.5px solid var(--slate-200);
+      border-radius: 8px;
+      padding: 5px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--slate-600);
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .logout-btn:hover {
+      background: #FEF2F2;
+      border-color: #FECACA;
+      color: #DC2626;
+    }
+    @media (max-width: 480px) {
+      .user-info { display: none; }
+    }
+  </style>
+  <script>
+    (function() {
+      const user = sessionStorage.getItem('brgy_user');
+      if (!user) {
+        window.location.replace('login.html');
+      }
+    })();
+  </script>
+</head>
+<body>
+
+<div class="layout">
+
+  <aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-brand">
+      <div class="brand-logo"><img src="logo.png" alt="BayanLink logo"></div>
+      <div class="brand-name">BayanLink</div>
+      <div class="brand-sub">Official Community Portal</div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+
+      <button class="nav-link active" data-page="home">
+        <span class="nav-icon"></span>
+        <span class="nav-label">Home</span>
+      </button>
+
+      <button class="nav-link" data-page="services">
+        <span class="nav-icon"></span>
+        <span class="nav-label">Certificate Requests</span>
+      </button>
+
+      <button class="nav-link" data-page="announcements">
+        <span class="nav-icon"></span>
+        <span class="nav-label">Announcements</span>
+      </button>
+
+      <button class="nav-link" data-page="officials">
+        <span class="nav-icon"></span>
+        <span class="nav-label">Barangay Officials</span>
+      </button>
+
+      <div class="nav-section-label">Support</div>
+
+      <button class="nav-link" data-page="contact">
+        <span class="nav-icon"></span>
+        <span class="nav-label">Complaints & Concerns</span>
+      </button>
+
+    </nav>
+
+    <div class="sidebar-footer">
+      <p>BayanLink &copy; 2026<br> SHAIRAX - ITEC50AProject</p>
+    </div>
+
+  </aside>
+
+  <div class="main-content">
+
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+        <span class="topbar-title" id="topbarTitle">Home</span>
+      </div>
+      <div class="topbar-right">
+        <button id="darkToggle" title="Switch to Dark Mode" style="background:none;border:none;cursor:pointer;font-size:18px;padding:4px 8px;border-radius:8px;transition:background 0.2s ease;" onmouseover="this.style.background='var(--green-50)'" onmouseout="this.style.background='none'">⏾</button>
+        <span class="topbar-badge"> Office Open</span>
+        <div class="topbar-user" id="topbarUser">
+          <div class="user-avatar" id="userAvatar">👤</div>
+          <div class="user-info">
+            <span class="user-name" id="userName">—</span>
+            <span class="user-role" id="userRole">—</span>
+          </div>
+          <button class="logout-btn" id="logoutBtn" title="Sign out">
+            <span>⍈</span> Sign Out
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <section class="page-section active" id="home">
+
+      <div class="hero">
+        <p class="hero-eyebrow">Official Portal · Indang, Cavite</p>
+        <h1 class="hero-title">
+          Public Service<br>
+          Made Easy for<br>
+          <em id="heroHighlight">Your Community</em>
+        </h1>
+        <p class="hero-desc">
+          No more long lines. Request certificates, stay updated on community news, and reach your barangay officials — all in one place.
+        </p>
+        <button class="hero-cta" data-nav="services">
+          Request a Certificate →
+        </button>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-icon">☺︎</div>
+          <div class="stat-info">
+            <div class="stat-num" data-count="4867">0</div>
+            <div class="stat-label">Registered Residents</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🗎</div>
+          <div class="stat-info">
+            <div class="stat-num" data-count="367">0</div>
+            <div class="stat-label">Certificates This Month</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🗹</div>
+          <div class="stat-info">
+            <div class="stat-num" data-count="67">0</div>
+            <div class="stat-label">Resolved Complaints</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🗣</div>
+          <div class="stat-info">
+            <div class="stat-num" data-count="7">0</div>
+            <div class="stat-label">Active Announcements</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div>
+          <h2>Our Services</h2>
+          <p>What can we help you with today?</p>
+        </div>
+        <button class="see-all" data-nav="services">View all →</button>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card" data-nav="services">
+          <div class="service-icon-wrap green">🗎</div>
+          <div class="service-text">
+            <h3>Certificate Requests</h3>
+            <p>Request Barangay Clearance, Indigency, Residency, and more. Online. No lining up.</p>
+          </div>
+        </div>
+        <div class="service-card" data-nav="announcements">
+          <div class="service-icon-wrap teal">🗣</div>
+          <div class="service-text">
+            <h3>Announcements</h3>
+            <p>Community news, health advisories, upcoming events, and important barangay updates.</p>
+          </div>
+        </div>
+        <div class="service-card" data-nav="contact">
+          <div class="service-icon-wrap blue">‼</div>
+          <div class="service-text">
+            <h3>Complaints & Concerns</h3>
+            <p>File a noise complaint, report illegal structures, or raise any community concern directly.</p>
+          </div>
+        </div>
+        <div class="service-card" data-nav="officials">
+          <div class="service-icon-wrap amber">🏛</div>
+          <div class="service-text">
+            <h3>Know Your Officials</h3>
+            <p>Meet your barangay captain, councilors, and staff — with contact numbers and roles.</p>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="section-header">
+        <div>
+          <h2>Latest Announcements</h2>
+          <p>Stay informed with community updates</p>
+        </div>
+        <button class="see-all" data-nav="announcements">See all →</button>
+      </div>
+
+      <div class="announcement-list">
+        <div class="announcement-item">
+          <div class="ann-dot"></div>
+          <div class="ann-content">
+            <h4>Free Medical Mission — June 15, 2026</h4>
+            <p>Health center conducts free checkup, blood pressure monitoring, and medicine distribution.</p>
+          </div>
+          <div class="ann-date">Jun 10</div>
+        </div>
+        <div class="announcement-item">
+          <div class="ann-dot orange"></div>
+          <div class="ann-content">
+            <h4>Scheduled Water Interruption</h4>
+            <p>Water supply will be cut from 8AM–5PM on June 14 for pipeline maintenance in Zone 3.</p>
+          </div>
+          <div class="ann-date">Jun 9</div>
+        </div>
+        <div class="announcement-item">
+          <div class="ann-dot red"></div>
+          <div class="ann-content">
+            <h4>URGENT: Dengue Advisory</h4>
+            <p>Increased dengue cases reported. Please eliminate stagnant water and use mosquito nets.</p>
+          </div>
+          <div class="ann-date">Jun 7</div>
+        </div>
+        <div class="announcement-item">
+          <div class="ann-dot"></div>
+          <div class="ann-content">
+            <h4>Barangay Fiesta 2026 — Save the Date!</h4>
+            <p>Annual barangay fiesta celebration on June 25–27. Parade, cultural shows & more.</p>
+          </div>
+          <div class="ann-date">Jun 5</div>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="page-section" id="services">
+
+      <div class="page-hero">
+        <h1>Certificate Requests</h1>
+        <p>Submit your certificate request online. You may pick up the physical document at the barangay hall within 3–5 working days, or opt for delivery. Payment is given upon retrieval of the physical copy of the certificate.</p>
+      </div>
+
+      <div class="process-section">
+        <h2>How It Works</h2>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-title">Click Request</div>
+            <div class="step-desc">Choose the certificate you need below</div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-title">Confirm Details</div>
+            <div class="step-desc">Verify your request in the confirmation dialog</div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-title">Wait for Notice</div>
+            <div class="step-desc">You'll be notified via SMS/email within 24 hrs</div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-title">Pick Up</div>
+            <div class="step-desc">Claim your certificate at the barangay hall</div>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="section-header" style="margin-bottom:16px;">
+        <div><h2>Available Certificates</h2></div>
+      </div>
+
+      <div class="services-full-grid">
+
+        <div class="cert-card">
+          <div class="cert-card-header">
+            <div class="cert-badge">🏛</div>
+            <h3>Barangay Clearance</h3>
+          </div>
+          <p>General-purpose clearance certifying that you have no pending cases or disputes within the barangay. Required for employment, business permits, and government transactions.</p>
+          <div class="cert-reqs">
+            <span>Requirements</span>
+            <ul>
+              <li>Valid Government ID</li>
+              <li>Proof of Residency</li>
+              <li>₱50 Processing Fee</li>
+            </ul>
+          </div>
+          <button class="btn-primary" data-cert="Barangay Clearance">📄 Request Now</button>
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-card-header">
+            <div class="cert-badge">🏠︎</div>
+            <h3>Certificate of Residency</h3>
+          </div>
+          <p>Certifies that you are a bona fide resident of BayanLink. Commonly required for school enrollment, scholarship applications, and bank transactions.</p>
+          <div class="cert-reqs">
+            <span>Requirements</span>
+            <ul>
+              <li>Valid Government ID</li>
+              <li>Utility Bill (same address)</li>
+              <li>₱30 Processing Fee</li>
+            </ul>
+          </div>
+          <button class="btn-primary" data-cert="Certificate of Residency">📄 Request Now</button>
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-card-header">
+            <div class="cert-badge">❤</div>
+            <h3>Certificate of Indigency</h3>
+          </div>
+          <p>Certifies that you belong to a low-income household. Required for free medical assistance, Philhealth benefits, and legal aid from the Public Attorney's Office (PAO).</p>
+          <div class="cert-reqs">
+            <span>Requirements</span>
+            <ul>
+              <li>Valid Government ID</li>
+              <li>4Ps or DSWD Certificate (if any)</li>
+              <li>Free of Charge</li>
+            </ul>
+          </div>
+          <button class="btn-primary" data-cert="Certificate of Indigency">📄 Request Now</button>
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-card-header">
+            <div class="cert-badge">✉</div>
+            <h3>Business Clearance</h3>
+          </div>
+          <p>Required for small businesses and sari-sari stores operating within the barangay. Precondition for obtaining a Mayor's Business Permit from the municipal office.</p>
+          <div class="cert-reqs">
+            <span>Requirements</span>
+            <ul>
+              <li>Owner's Valid ID</li>
+              <li>DTI / SEC Registration</li>
+              <li>₱150 Processing Fee</li>
+            </ul>
+          </div>
+          <button class="btn-primary" data-cert="Business Clearance">📄 Request Now</button>
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-card-header">
+            <div class="cert-badge">☻</div>
+            <h3>Barangay ID</h3>
+          </div>
+          <p>Official barangay identification card valid for all local transactions. Especially useful for senior citizens, students, and residents without a national ID.</p>
+          <div class="cert-reqs">
+            <span>Requirements</span>
+            <ul>
+              <li>1x1 or 2x2 Photo</li>
+              <li>Birth Certificate</li>
+              <li>₱20 ID Fee</li>
+            </ul>
+          </div>
+          <button class="btn-primary" data-cert="Barangay ID">📄 Request Now</button>
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-card-header">
+            <div class="cert-badge">𓀗</div>
+            <h3>Senior Citizen Certification</h3>
+          </div>
+          <p>Verifies senior citizen status for government benefits, discounts under the Expanded Senior Citizens Act, and priority lane access in government offices.</p>
+          <div class="cert-reqs">
+            <span>Requirements</span>
+            <ul>
+              <li>Birth Certificate or Valid ID</li>
+              <li>OSCA Registration (if available)</li>
+              <li>Free of Charge</li>
+            </ul>
+          </div>
+          <button class="btn-primary" data-cert="Senior Citizen Certification">📄 Request Now</button>
+        </div>
+
+      </div>
+
+      <p style="font-size:13px; color:var(--slate-400); text-align:center; margin-top:8px;">
+        ℹ &nbsp;Office hours: Monday – Friday, 8:00 AM – 5:00 PM &nbsp;|&nbsp; Closed on Holidays
+      </p>
+
+    </section>
+    
+
+
+    
+    <section class="page-section" id="announcements">
+
+      <div class="page-hero">
+        <h1>Announcements</h1>
+        <p>Official notices, community bulletins, and events from BayanLink.</p>
+      </div>
+
+      
+      <div class="ann-filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="health">Health</button>
+        <button class="filter-btn" data-filter="general">General</button>
+        <button class="filter-btn" data-filter="urgent">Urgent</button>
+        <button class="filter-btn" data-filter="event">Events</button>
+      </div>
+
+      
+      <div class="ann-full-list">
+
+        <div class="ann-card" data-tag="health">
+          <div class="ann-card-date">
+            <div class="day">15</div>
+            <div class="month">Jun</div>
+          </div>
+          <div class="ann-divider"></div>
+          <div class="ann-card-body">
+            <span class="ann-tag tag-health"> Health</span>
+            <h3>Free Medical Mission — June 15, 2026</h3>
+            <p>The barangay health center, in partnership with Cavite Provincial Health Office, will conduct a free medical mission. Services include general checkup, blood pressure monitoring, blood sugar testing, and medicine distribution for hypertension and diabetes. All residents are welcome. Bring your barangay ID or valid ID. Mission starts at 8:00 AM at the Barangay Covered Court.</p>
+          </div>
+        </div>
+
+        <div class="ann-card" data-tag="general">
+          <div class="ann-card-date">
+            <div class="day">14</div>
+            <div class="month">Jun</div>
+          </div>
+          <div class="ann-divider"></div>
+          <div class="ann-card-body">
+            <span class="ann-tag tag-general">General</span>
+            <h3>Scheduled Water Interruption — June 14</h3>
+            <p>The Indang Water District will conduct maintenance work on the main water pipeline serving Zone 3 (Sitio Maliwanag and Sitio Pag-asa). Water supply will be interrupted from 8:00 AM to 5:00 PM on June 14, 2026. Please store enough water for the day. We apologize for the inconvenience.</p>
+          </div>
+        </div>
+
+        <div class="ann-card" data-tag="urgent">
+          <div class="ann-card-date">
+            <div class="day">07</div>
+            <div class="month">Jun</div>
+          </div>
+          <div class="ann-divider"></div>
+          <div class="ann-card-body">
+            <span class="ann-tag tag-urgent">Urgent</span>
+            <h3>Dengue Advisory — Increased Cases Reported</h3>
+            <p>The Barangay Health Center has recorded a 30% increase in dengue cases this month. Residents are reminded to: eliminate all stagnant water around the household, use mosquito nets especially for children, apply mosquito repellent, and immediately consult the health center for fever lasting more than 2 days. The barangay will conduct fogging operations on June 12 and 13.</p>
+          </div>
+        </div>
+
+        <div class="ann-card" data-tag="event">
+          <div class="ann-card-date">
+            <div class="day">25</div>
+            <div class="month">Jun</div>
+          </div>
+          <div class="ann-divider"></div>
+          <div class="ann-card-body">
+            <span class="ann-tag tag-event">Event</span>
+            <h3>BayanLink Fiesta 2026 — June 25–27</h3>
+            <p>The Annual Barangay Fiesta is happening on June 25–27, 2026! Celebrate with us: street parade on the 25th, cultural show and agri-fair on the 26th, and a basketball tournament on the 27th. All residents and guests are welcome. Venue: Barangay Plaza and Covered Court.</p>
+          </div>
+        </div>
+
+        <div class="ann-card" data-tag="general">
+          <div class="ann-card-date">
+            <div class="day">01</div>
+            <div class="month">Jun</div>
+          </div>
+          <div class="ann-divider"></div>
+          <div class="ann-card-body">
+            <span class="ann-tag tag-general">General</span>
+            <h3>Curfew Reminder for Minors</h3>
+            <p>In accordance with Ordinance No. 2023-04, minors under 18 years old are prohibited from loitering in public places without parental supervision after 10:00 PM. Parents and guardians are urged to monitor their children. Violations may result in the minor being brought to the Barangay Hall for custody.</p>
+          </div>
+        </div>
+
+        <div class="ann-card" data-tag="health">
+          <div class="ann-card-date">
+            <div class="day">28</div>
+            <div class="month">May</div>
+          </div>
+          <div class="ann-divider"></div>
+          <div class="ann-card-body">
+            <span class="ann-tag tag-health">Health</span>
+            <h3>Rabies Vaccination Drive for Pets</h3>
+            <p>The Bureau of Animal Industry (BAI) will conduct a free anti-rabies vaccination for dogs and cats on May 28, 2026, 8:00 AM–12:00 PM, at the Barangay Hall grounds. Pet owners are required to bring their animals on a leash or in a carrier. This is free and open to all barangay residents.</p>
+          </div>
+        </div>
+
+        <div class="ann-card" data-tag="event">
+          <div class="ann-card-date">
+            <div class="day">20</div>
+            <div class="month">May</div>
+          </div>
+          <div class="ann-divider"></div>
+          <div class="ann-card-body">
+            <span class="ann-tag tag-event">Event</span>
+            <h3>Livelihood Skills Training — Soap Making & Candle Making</h3>
+            <p>The DOLE-BSAO Cavite, in coordination with the barangay, will hold a 2-day livelihood skills training on May 20–21. Participants will receive a training certificate and starter kit. Slots are limited to 30 participants. Pre-register at the Barangay Hall or call our hotline.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+    
+
+
+    
+    <section class="page-section" id="officials">
+
+      <div class="officials-intro">
+        <h2>Your Barangay Officials</h2>
+        <p>Elected and appointed officials serving BayanLink for the term 2023–2026. Know who represents and serves your community.</p>
+      </div>
+
+      
+      <div class="section-header">
+        <div><h2>Punong Barangay</h2></div>
+      </div>
+
+      <div class="officials-grid" style="grid-template-columns: 1fr; max-width: 300px; margin-bottom: 28px;">
+        <div class="official-card" style="display:flex; align-items:center; gap:18px; text-align:left; padding: 24px;">
+          <div class="official-avatar" style="width:80px; height:80px; font-size:20px; flex-shrink:0;">HON</div>
+          <div>
+            <div style="font-size: 11px; color: var(--green-600); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px;">Punong Barangay</div>
+            <h3 style="font-size: 18px; margin-bottom: 4px;">Hon. Ricardo M. Santos</h3>
+            <div class="contact">☏ 0917-555-0101</div>
+            <div class="contact" style="margin-top:2px;">✉︎ captain@bayanlink.gov.ph</div>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="section-header" style="margin-bottom:16px;">
+        <div><h2>Barangay Kagawads (Councilors)</h2></div>
+      </div>
+
+      <div class="officials-grid">
+        <div class="official-card">
+          <div class="official-avatar">MS</div>
+          <h3>Hon. Maria C. Reyes</h3>
+          <div class="role">Kagawad – Health</div>
+          <div class="contact">☏ 0918-555-0102</div>
+        </div>
+        <div class="official-card">
+          <div class="official-avatar">MR</div>
+          <h3>Hon. Jose L. Garcia</h3>
+          <div class="role">Kagawad – Infrastructure</div>
+          <div class="contact">☏ 0919-555-0103</div>
+        </div>
+        <div class="official-card">
+          <div class="official-avatar">MRS</div>
+          <h3>Hon. Ana R. Cruz</h3>
+          <div class="role">Kagawad – Education</div>
+          <div class="contact">☏ 0920-555-0104</div>
+        </div>
+        <div class="official-card">
+          <div class="official-avatar">MR</div>
+          <h3>Hon. Pedro A. Bautista</h3>
+          <div class="role">Kagawad – Peace & Order</div>
+          <div class="contact">☏ 0921-555-0105</div>
+        </div>
+        <div class="official-card">
+          <div class="official-avatar">MRS</div>
+          <h3>Hon. Luz T. Flores</h3>
+          <div class="role">Kagawad – Livelihood</div>
+          <div class="contact">☏ 0922-555-0106</div>
+        </div>
+        <div class="official-card">
+          <div class="official-avatar">MR</div>
+          <h3>Hon. Ramon V. Lopez</h3>
+          <div class="role">Kagawad – Environment</div>
+          <div class="contact">☏ 0923-555-0107</div>
+        </div>
+        <div class="official-card">
+          <div class="official-avatar">MS</div>
+          <h3>Hon. Grace M. Torres</h3>
+          <div class="role">SK Chairperson</div>
+          <div class="contact">☏ 0924-555-0108</div>
+        </div>
+      </div>
+
+      
+      <div class="section-header" style="margin-bottom:16px;">
+        <div><h2>Barangay Staff</h2></div>
+      </div>
+
+      <div class="officials-grid">
+        <div class="official-card">
+          <div class="official-avatar">MRS</div>
+          <h3>Rosario D. Santos</h3>
+          <div class="role">Barangay Secretary</div>
+          <div class="contact">☏ 0925-555-0109</div>
+        </div>
+        <div class="official-card">
+          <div class="official-avatar">MR</div>
+          <h3>Ernesto M. Ramos</h3>
+          <div class="role">Barangay Treasurer</div>
+          <div class="contact">☏ 0926-555-0110</div>
+        </div>
+        <div class="official-card">
+          <div class="official-avatar">DR</div>
+          <h3>Dr. Carla A. Mendoza</h3>
+          <div class="role">Barangay Health Officer</div>
+          <div class="contact">☏ 0927-555-0111</div>
+        </div>
+        <div class="official-card">
+          <div class="official-avatar">SGT</div>
+          <h3>Sgt. Bobby N. Rivera</h3>
+          <div class="role">Tanod Chief</div>
+          <div class="contact">☏ 0928-555-0112</div>
+        </div>
+      </div>
+
+    </section>
+    
+
+
+    
+    <section class="page-section" id="contact">
+
+      <div class="page-hero">
+        <h1>Complaints & Concerns</h1>
+        <p>Submit your community concern and we'll route it to the right official. All submissions are acknowledged within 24 hours.</p>
+      </div>
+
+      <div class="contact-grid">
+
+        
+        <div class="form-card">
+          <h2>Submit a Concern</h2>
+          <p class="form-subtitle">Fill out the form below. All fields marked with * are required.</p>
+
+          <form id="complaintForm" novalidate>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>First Name *</label>
+                <input type="text" placeholder="e.g. Juan" required />
+              </div>
+              <div class="form-group">
+                <label>Last Name *</label>
+                <input type="text" placeholder="e.g. Dela Cruz" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Email Address *</label>
+              <input type="email" placeholder="you@email.com" required />
+            </div>
+
+            <div class="form-group">
+              <label>Contact Number *</label>
+              <input type="tel" placeholder="09XX-XXX-XXXX" required />
+            </div>
+
+            <div class="form-group">
+              <label>Zone / Sitio / Street *</label>
+              <input type="text" placeholder="e.g. Zone 2, Sitio Maliwanag" required />
+            </div>
+
+            <div class="form-group">
+              <label>Type of Concern *</label>
+              <select required>
+                <option value="">— Select category —</option>
+                <option>Noise Complaint</option>
+                <option>Illegal Structure / Encroachment</option>
+                <option>Garbage / Sanitation Issue</option>
+                <option>Peace & Order Concern</option>
+                <option>Flooding / Infrastructure</option>
+                <option>Neighbor Dispute / Mediation Request</option>
+                <option>Health & Safety Hazard</option>
+                <option>Request for Assistance</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Detailed Description *</label>
+              <textarea placeholder="Describe your concern in detail. Include the date, time, and exact location if applicable." required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Preferred Resolution</label>
+              <select>
+                <option value="">— Optional —</option>
+                <option>Mediation / Dialogue</option>
+                <option>Ordinance Enforcement</option>
+                <option>Barangay Blotter</option>
+                <option>Referral to Higher Authority</option>
+              </select>
+            </div>
+
+            <button type="submit" class="form-btn">🗒 Submit Complaint / Concern</button>
+
+          </form>
+        </div>
+
+        
+        <div class="contact-info-stack">
+
+          <div class="contact-info-card">
+            <h3>🖈 Office Location</h3>
+            <div class="info-row">
+              <span class="info-icon"></span>
+              <div class="info-text">
+                <strong>Barangay Hall</strong>
+                BayanLink, Indang, Cavite
+              </div>
+            </div>
+            <div class="info-row">
+              <span class="info-icon"></span>
+              <div class="info-text">
+                <strong>Office Hours</strong>
+                Mon – Fri, 8:00 AM – 5:00 PM
+              </div>
+            </div>
+            <div class="info-row">
+              <span class="info-icon"></span>
+              <div class="info-text">
+                <strong>Closed</strong>
+                Weekends & Public Holidays
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-info-card">
+            <h3>🕻 Contact Numbers</h3>
+            <div class="info-row">
+              <span class="info-icon"></span>
+              <div class="info-text">
+                <strong>Barangay Hotline</strong>
+                0917-555-0100
+              </div>
+            </div>
+            <div class="info-row">
+              <span class="info-icon"></span>
+              <div class="info-text">
+                <strong>Emergency (Tanod)</strong>
+                0928-555-0112
+              </div>
+            </div>
+            <div class="info-row">
+              <span class="info-icon"></span>
+              <div class="info-text">
+                <strong>Email</strong>
+                info@bayanlink.gov.ph
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-info-card">
+            <h3>ⓘ Complaint Process</h3>
+            <div class="info-row">
+              <span class="info-icon">1️.</span>
+              <div class="info-text">Submit form online</div>
+            </div>
+            <div class="info-row">
+              <span class="info-icon">2️.</span>
+              <div class="info-text">Receive acknowledgment (24 hrs)</div>
+            </div>
+            <div class="info-row">
+              <span class="info-icon">3️.</span>
+              <div class="info-text">Concern routed to proper official</div>
+            </div>
+            <div class="info-row">
+              <span class="info-icon">4️.</span>
+              <div class="info-text">Resolution within 5–15 working days</div>
+            </div>
+          </div>
+
+          <div class="contact-info-card" style="background: var(--green-900); border-color: var(--green-900);">
+            <h3 style="color: var(--white);">Emergency?</h3>
+            <p style="font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 12px; line-height: 1.6;">For immediate threats to life and property, do not use this form.</p>
+            <div style="font-size: 20px; font-weight: 800; color: var(--green-400); margin-bottom: 4px;">911</div>
+            <div style="font-size: 12px; color: rgba(255,255,255,0.6);">National Emergency Hotline</div>
+            <div style="font-size: 18px; font-weight: 700; color: var(--white); margin-top: 10px;">0928-555-0112</div>
+            <div style="font-size: 12px; color: rgba(255,255,255,0.6);">Barangay Tanod (24/7)</div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+    
+
+
+    
+    <footer class="site-footer">
+      <span>&copy; 2026 BayanLink. All Rights Reserved. - Developed as a community assistance platform for improving access to local services.</span>
+    </footer>
+
+  </div>
+  
+
+</div>
+
+
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h2 id="modalTitle">Confirm Certificate Request</h2>
+    <p id="modalDesc">You're about to submit a certificate request. Make sure you have your valid ID and required documents ready. Processing takes 3–5 working days.</p>
+    <div style="background: var(--green-50); border-radius: 8px; padding: 12px 14px; margin-bottom: 16px; font-size: 13px; color: var(--slate-600); line-height: 1.6;">
+      📍 Pick-up location: <strong>Barangay Hall, BayanLink, Indang, Cavite</strong><br>
+      🕐 Processing time: <strong>3–5 working days</strong><br>
+      Payment: <strong>given upon retrieval of the physical copy of the certificate</strong>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-primary" id="modalConfirm">✅ Confirm Request</button>
+      <button class="btn-cancel" id="modalCancel">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script src="jscript.js"></script>
+</body>
+</html>
